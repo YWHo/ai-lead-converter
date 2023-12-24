@@ -1,5 +1,6 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
+// NOTE: run "npx prisma db push" to synch up schema with the server
 
 datasource db {
   provider     = "mysql"
