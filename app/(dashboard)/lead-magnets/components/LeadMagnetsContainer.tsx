@@ -4,6 +4,7 @@ import React from "react";
 import { Lead, LeadMagnet } from "@prisma/client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import LeadMagnetTable from "./LeadMagnetTable";
 
 interface LeadMagnetsContainerProps {
   leadMagnets: LeadMagnet[];
@@ -24,6 +25,8 @@ function LeadMagnetsContainer({
           <Link href="/lead-magnet-editor">Create</Link>
         </Button>
       </div>
+
+      <LeadMagnetTable leadMagnets={leadMagnets} leads={leads} />
     </div>
   );
 }
