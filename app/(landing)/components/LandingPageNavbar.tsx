@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 import { SignInButton, UserButton, currentUser } from "@clerk/nextjs";
-import { User } from '@clerk/nextjs/api';
+import { User } from "@clerk/nextjs/api";
 import Link from "next/link";
 
 async function LandingPageNavbar() {
@@ -12,12 +12,15 @@ async function LandingPageNavbar() {
   return (
     <nav className="flex w-screen items-center justify-between p-6">
       <div>
-        <Link className='text-2xl font-bold text-purple-500 no-underline' href="/">
+        <Link
+          className="text-2xl font-bold text-purple-500 no-underline"
+          href="/"
+        >
           LeadConvert
         </Link>
       </div>
       <div className="text-purple-500 font-semibold text-lg">
-        {user? (
+        {user ? (
           <div className="flex flex-row gap-x-4 items-center">
             <Link href="/lead-magnets">
               <Button variant="outline">Open App</Button>
@@ -26,11 +29,10 @@ async function LandingPageNavbar() {
           </div>
         ) : (
           <SignInButton />
-        )
-        }
+        )}
       </div>
     </nav>
-  )
+  );
 }
 
 export default LandingPageNavbar;

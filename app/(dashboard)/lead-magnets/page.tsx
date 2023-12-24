@@ -1,11 +1,12 @@
-import React from 'react'
-import { auth } from '@clerk/nextjs';
-import { prismadb } from '@/lib/prismadb';
+import React from "react";
+import { auth } from "@clerk/nextjs";
+import { prismadb } from "@/lib/prismadb";
+import LeadMagnetsContainer from "./components/LeadMagnetsContainer";
 
 const getLeadMagnets = async (userId: string) => {
   try {
     const leadMagnets = await prismadb.leadMagnet.findMany({
-      where: { userId }
+      where: { userId },
     });
 
     return leadMagnets;
@@ -13,12 +14,12 @@ const getLeadMagnets = async (userId: string) => {
     console.error(error);
     return [];
   }
-}
+};
 
 const getLeads = async (userId: string) => {
   try {
     const leads = await prismadb.lead.findMany({
-      where: { userId }
+      where: { userId },
     });
 
     return leads;
@@ -26,7 +27,7 @@ const getLeads = async (userId: string) => {
     console.error(error);
     return [];
   }
-}
+};
 
 async function LeadMagnetsPage() {
   const { userId } = auth();
@@ -38,15 +39,13 @@ async function LeadMagnetsPage() {
 
   const [leadMagnets, leads] = await Promise.all([
     leadMagnetsRequest,
-    leadsRequest
-  ])
+    leadsRequest,
+  ]);
 
   console.log("leadMagnets", leadMagnets);
   console.log("leads", leads);
 
-  return (
-    <div>LeadMagnetsPage</div>
-  )
+  return <LeadMagnetsContainer leadMagnets={leadMagnets} leads={leads} />;
 }
 
-export default LeadMagnetsPage
+export default LeadMagnetsPage;
