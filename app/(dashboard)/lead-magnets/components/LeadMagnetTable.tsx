@@ -38,6 +38,7 @@ function LeadMagnetTable({ leadMagnets, leads }: LeadMagnetTableProps) {
     return conversionRate;
   };
 
+  // refer to: https://ui.shadcn.com/docs/components/table
   return (
     <Table>
       <TableHeader>
@@ -54,7 +55,9 @@ function LeadMagnetTable({ leadMagnets, leads }: LeadMagnetTableProps) {
             <TableCell>{leadMagnet.name}</TableCell>
             <TableCell>{leadMagnet.pageViews}</TableCell>
             <TableCell>{getLeadsForLeadMagnet(leadMagnet.id)}</TableCell>
-            <TableCell>{getConversionRate(leadMagnet.id, leadMagnet.pageViews)}</TableCell>
+            <TableCell>
+              {getConversionRate(leadMagnet.id, leadMagnet.pageViews)}
+            </TableCell>
             <TableCell>
               <Link href={`/leads/${leadMagnet.id}`}>
                 <Button className="font-normal" variant="link">
