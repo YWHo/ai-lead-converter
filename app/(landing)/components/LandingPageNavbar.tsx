@@ -7,7 +7,7 @@ import Link from "next/link";
 async function LandingPageNavbar() {
   const user: User | null = await currentUser();
 
-  console.log("USER", user);
+  // console.log("USER", user);
 
   return (
     <nav className="flex w-screen items-center justify-between p-6">
