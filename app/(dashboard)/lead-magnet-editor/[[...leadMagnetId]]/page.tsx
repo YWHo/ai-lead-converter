@@ -2,6 +2,8 @@ import { prismadb } from "@/lib/prismadb";
 import { LeadMagnet } from "@prisma/client";
 import React from "react";
 import { DEFAULT_LEAD_MAGNET } from "./lead-magnet-constant";
+import LeadMagnetNotFound from "@/components/LeadMagnetNotFound";
+import LeadMagnetEditorContainer from "./components/LeadMagnetEditorContainer";
 
 interface LeadMagnetEditorParams {
   params: {
@@ -27,12 +29,12 @@ async function LeadMagnetEditorPage({ params }: LeadMagnetEditorParams) {
     });
 
     if (!leadMagnet) {
-      <div>LeadMagnetEditorPage Not found</div>;
-      // return <LeadMagnetNotFound returnLink='/leadmagnets' />;
+      return <LeadMagnetNotFound returnLink="/leadmagnets" />;
     }
   }
 
-  return <div>LeadMagnetEditorPage</div>;
+  // return a client component (because context can only be used in client component)
+  return <LeadMagnetEditorContainer leadMagnet={leadMagnet} />;
 }
 
 export default LeadMagnetEditorPage;

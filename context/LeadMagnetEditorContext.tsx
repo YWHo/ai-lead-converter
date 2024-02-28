@@ -18,7 +18,7 @@ interface LeadMagnetEditorContextState {
 const LeadMagnetEditorContext =
   createContext<LeadMagnetEditorContextState | null>(null);
 
-export const LeadMagnetEditorProvider = ({
+export const LeadMagnetEditorContextProvider = ({
   children,
   leadMagnet,
 }: {
