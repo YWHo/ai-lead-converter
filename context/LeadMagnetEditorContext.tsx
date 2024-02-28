@@ -25,11 +25,14 @@ export const LeadMagnetEditorContextProvider = ({
   children: ReactNode;
   leadMagnet: LeadMagnet;
 }) => {
-  const { session } = useSession();
+  const { isLoaded, session, isSignedIn } = useSession();
   const { replace, push } = useRouter();
   const [editedLeadMagnet, setEditedLeadMagnet] =
     useState<LeadMagnet>(leadMagnet);
 
+  if (!isLoaded || !isSignedIn) {
+    return null;
+  }
   if (!session) {
     throw new Error("No session found");
   }
