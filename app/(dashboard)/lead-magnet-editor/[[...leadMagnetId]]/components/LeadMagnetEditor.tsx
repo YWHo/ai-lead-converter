@@ -1,4 +1,6 @@
+"use client";
 import React, { useState } from "react";
+import LeadMagnetEditorNavbar from "./LeadMagnetEditorNavbar";
 
 export type LeadMagnetSections =
   | "content"
@@ -15,7 +17,7 @@ function LeadMagnetEditor({}: LeadMagnetEditorProps) {
     useState<LeadMagnetSections>("content");
   return (
     <div className="flex h-screen w-full flex-col overflow-y-hidden">
-      LeadMagnetEditorNavBar
+      <LeadMagnetEditorNavbar />
       <div className="flex h-full flex-row">LeadMagnetEditorSidebar</div>
       <div className="h-full flex-grow">
         {selectedEditor === "content" && "LeadMagnetContentEditor"}
