@@ -12,12 +12,19 @@ interface LeadMagnetEditorNavbarProps {}
 
 function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
   const router = useRouter();
-  const { editedLeadMagnet, publish, save, setEditedLeadMagnet, unpublish } =
-    useLeadMagnetEditorContext();
+  const {
+    editedLeadMagnet,
+    publish,
+    remove,
+    save,
+    setEditedLeadMagnet,
+    unpublish,
+  } = useLeadMagnetEditorContext();
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
   const [unpublishing, setUnpublishing] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   console.log("LeadMagnetEditorNavbar editedLeadMagnet:\n", editedLeadMagnet);
 
@@ -74,6 +81,19 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
     }
   };
 
+  const handleDelete = async () => {
+    setDeleting(true);
+    try {
+      await remove();
+      toast.success("Deleted!");
+    } catch (err) {
+      console.log("handleDelete error:\n", err);
+      toast.error("Error deleting. Please try again.");
+    } finally {
+      setDeleting(false);
+    }
+  };
+
   return (
     <div className="flex w-full flex-row items-center justify-between border-b-[1px] border-solid border-gray-200 bg-white p-3 text-gray-600 ">
       <div className="flex flex-row items-center">
@@ -119,8 +139,13 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
         )}
       </div>
       <div className="flex flex-row items-center gap-x-4">
-        {/* TODO: Delete with state */}
-        {/* TODO: Unpublish and View Final LM */}
+        {/* Delete with state */}
+        {editedLeadMagnet.id && (
+          <Button variant="destructive" onClick={handleDelete}>
+            {deleting ? "Deleting..." : "Delete"}
+          </Button>
+        )}
+        {/* Unpublish and View Final LM */}
         {editedLeadMagnet.status === "published" && (
           <>
             <Button onClick={handleUnpublish}>
