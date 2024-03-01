@@ -6,16 +6,18 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 interface LeadMagnetEditorNavbarProps {}
 
 function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
   const router = useRouter();
-  const { editedLeadMagnet, publish, save, setEditedLeadMagnet } =
+  const { editedLeadMagnet, publish, save, setEditedLeadMagnet, unpublish } =
     useLeadMagnetEditorContext();
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
+  const [unpublishing, setUnpublishing] = useState(false);
 
   console.log("LeadMagnetEditorNavbar editedLeadMagnet:\n", editedLeadMagnet);
 
@@ -28,9 +30,11 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
       toast.error("Error saving name!");
     }
   };
+
   const cancelSaveName = () => {
     setEditing(false);
   };
+
   const handleSave = async () => {
     setSaving(true);
     try {
@@ -43,6 +47,7 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
       setSaving(false);
     }
   };
+
   const handlePublish = async () => {
     setPublishing(true);
     try {
@@ -53,6 +58,19 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
       toast.error("Error publishing. Please try again.");
     } finally {
       setPublishing(false);
+    }
+  };
+
+  const handleUnpublish = async () => {
+    setUnpublishing(true);
+    try {
+      await unpublish();
+      toast.success("Unpublished!");
+    } catch (err) {
+      console.log("handleUnpublish error:\n", err);
+      toast.error("Error unpublishing. Please try again.");
+    } finally {
+      setUnpublishing(false);
     }
   };
 
@@ -103,6 +121,17 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
       <div className="flex flex-row items-center gap-x-4">
         {/* TODO: Delete with state */}
         {/* TODO: Unpublish and View Final LM */}
+        {editedLeadMagnet.status === "published" && (
+          <>
+            <Button onClick={handleUnpublish}>
+              {unpublishing ? "Unpublishing..." : "Unpublish"}
+            </Button>
+            {/* TODO: Change "test" to account username */}
+            <Link href={`/lm/test/${editedLeadMagnet.slug}`}>
+              <Button>View Published</Button>
+            </Link>
+          </>
+        )}
         {/* Save & Publish with state */}
         <Button variant="outline" onClick={handleSave} disabled={saving}>
           {publishing ? "Saving..." : "Save"}
