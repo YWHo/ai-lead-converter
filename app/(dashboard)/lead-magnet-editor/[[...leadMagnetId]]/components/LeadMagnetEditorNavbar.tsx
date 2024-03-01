@@ -5,14 +5,17 @@ import { BsArrowLeft, BsCheck, BsPencil } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
+import { Button } from "@/components/ui/button";
 
 interface LeadMagnetEditorNavbarProps {}
 
 function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
   const router = useRouter();
-  const { editedLeadMagnet, save, setEditedLeadMagnet } =
+  const { editedLeadMagnet, publish, save, setEditedLeadMagnet } =
     useLeadMagnetEditorContext();
   const [editing, setEditing] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [publishing, setPublishing] = useState(false);
 
   console.log("LeadMagnetEditorNavbar editedLeadMagnet:\n", editedLeadMagnet);
 
@@ -27,6 +30,30 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
   };
   const cancelSaveName = () => {
     setEditing(false);
+  };
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await save();
+      toast.success("Saved!");
+    } catch (err) {
+      console.log("handleSave error:\n", err);
+      toast.error("Error saving. Please try again");
+    } finally {
+      setSaving(false);
+    }
+  };
+  const handlePublish = async () => {
+    setPublishing(true);
+    try {
+      await publish();
+      toast.success("Published!");
+    } catch (err) {
+      console.log("handlePublish error:\n", err);
+      toast.error("Error publishing. Please try again.");
+    } finally {
+      setPublishing(false);
+    }
   };
 
   return (
@@ -76,7 +103,13 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
       <div className="flex flex-row items-center gap-x-4">
         {/* TODO: Delete with state */}
         {/* TODO: Unpublish and View Final LM */}
-        {/* TODO: Save & Publish with state */}
+        {/* Save & Publish with state */}
+        <Button variant="outline" onClick={handleSave} disabled={saving}>
+          {publishing ? "Saving..." : "Save"}
+        </Button>
+        <Button onClick={handlePublish} disabled={publishing}>
+          {publishing ? "Publishing..." : "Publish"}
+        </Button>
       </div>
     </div>
   );
