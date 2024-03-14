@@ -21,8 +21,8 @@ const seed = async () => {
       publishedTitle: "This is a published title",
       slug: "lead-magnet-slug",
       status: "draft",
-      userId: "user_2Zxnyn2qplqmDvG0cCSmW35zLr9" // use your own test user id
-    }
+      userId: "user_2cvJ5838qbMGonH9UL1ThSUa7uj", // ok to use your own test user id
+    },
   });
 
   await prisma.lead.createMany({
@@ -31,26 +31,26 @@ const seed = async () => {
         name: "Dummy User 1",
         email: "dummy1@gmail.com",
         leadMagnetId: "123456789",
-        userId: "user_2Zxnyn2qplqmDvG0cCSmW35zLr9"
+        userId: "user_2cvJ5838qbMGonH9UL1ThSUa7uj",
       },
       {
         name: "Dummy User 2",
         email: "dummy2@gmail.com",
         leadMagnetId: "123456789",
-        userId: "user_2Zxnyn2qplqmDvG0cCSmW35zLr9"
-      }
-    ]
+        userId: "user_2cvJ5838qbMGonH9UL1ThSUa7uj",
+      },
+    ],
   });
-}
+};
 
 // Run the seedDatabase function
 seed()
   .then(() => {
     console.log("Seeding compiled successfully");
-  }).catch(error => {
+  })
+  .catch((error) => {
     console.error("Error seeding the database: ", error);
   });
-
 
 // NOTE: 1. run "npx prisma db seed" to seed
 //       2. run "npx prisma studio" to view the database content
