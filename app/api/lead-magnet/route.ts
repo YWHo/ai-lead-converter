@@ -1,38 +1,31 @@
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { leadMagnetCreateRequest } from "./schema";
+import { leadMagnetCreateRequest, leadMagnetUpdateRequest } from "./schema";
 import { prismadb } from "@/lib/prismadb";
 
 export async function POST(request: Request) {
-  // TODO: Grab our authentication state from clerk
-  const user = await currentUser();
-
-  console.log("\n\n\n ---- POST /api/lead-magnet: user:\n", user);
-
-  if (!user?.id) {
-    return NextResponse.json({ message: "Unauthenticated" }, { status: 401 });
-  }
-
-  const userId = user.id; // testing
-
-  // TODO: Parse & validate the data the user sent us
-  const requestData = await request.json();
-  console.log("\n\n\n ---- POST /api/lead-magnet: requestData:\n", requestData);
-  const parsed = leadMagnetCreateRequest.safeParse(requestData);
-
-  if (!parsed.success) {
-    return NextResponse.json(
-      { message: parsed.error.message },
-      { status: 400 }
-    );
-  }
-
-  console.log("\n\n\n ---- POST /api/lead-magnet: parsed success.....\n");
-
   try {
+    // Grab our authentication state from clerk
+    const user = await currentUser();
+
+    if (!user?.id) {
+      return NextResponse.json({ message: "Unauthenticated" }, { status: 401 });
+    }
+
+    const userId = user.id;
+
+    // Parse & validate the data the user sent us
+    const requestData = await request.json();
+    const parsed = leadMagnetCreateRequest.safeParse(requestData);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { message: parsed.error.message },
+        { status: 400 }
+      );
+    }
+
     const newLead = parsed.data;
-    console.log("\n\n\n ----POST /api/lead-magnet: userId:\n", userId);
-    console.log("\n\n\n ----POST /api/lead-magnet: newLead:\n", newLead);
 
     // Create a new lead-magnet in our database with Prisma
     const newLeadMagnet = await prismadb.leadMagnet.create({
@@ -42,7 +35,7 @@ export async function POST(request: Request) {
     // Return the new lead magnet to the user
     return NextResponse.json(
       {
-        message: "Sucessfully created Lead Magnet",
+        message: "Successfully created Lead Magnet",
         data: newLeadMagnet,
         success: true,
       },
@@ -53,6 +46,61 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message: "Failed to add a new Lead Magnet",
+        data: null,
+        success: false,
+      },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(request: Request) {
+  try {
+    // Grab our authentication state from clerk
+    const user = await currentUser();
+
+    if (!user?.id) {
+      return NextResponse.json({ message: "Unauthenticated" }, { status: 401 });
+    }
+
+    const userId = user.id;
+
+    // Parse & validate the data the user sent us
+    const requestData = await request.json();
+    const parsed = leadMagnetUpdateRequest.safeParse(requestData);
+
+    if (!parsed.success) {
+      return NextResponse.json(
+        { message: parsed.error.message },
+        { status: 400 }
+      );
+    }
+
+    const leadMagnetToUpdate = parsed.data;
+    if (leadMagnetToUpdate.userId !== userId) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 403 });
+    }
+
+    // Create a new lead-magnet in our database with Prisma
+    const updatedLeadMagnet = await prismadb.leadMagnet.update({
+      where: { id: leadMagnetToUpdate.id },
+      data: { ...leadMagnetToUpdate },
+    });
+
+    // Return the new lead magnet to the user
+    return NextResponse.json(
+      {
+        message: "Successfully updated Lead Magnet",
+        data: updatedLeadMagnet,
+        success: true,
+      },
+      { status: 201 }
+    );
+  } catch (err) {
+    console.log("PUT /api/lead-magnet err:\n", err);
+    return NextResponse.json(
+      {
+        message: "Failed to update the Lead Magnet",
         data: null,
         success: false,
       },

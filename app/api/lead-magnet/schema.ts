@@ -27,3 +27,8 @@ export const leadMagnetCreateRequest = z.object({
   }),
   slug: z.string({ required_error: "Slug is required" }),
 });
+
+export const leadMagnetUpdateRequest = leadMagnetCreateRequest.extend({
+  id: z.string({ required_error: "Id is required" }),
+  userId: z.string({ required_error: "User Id is required" }),
+});
