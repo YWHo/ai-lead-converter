@@ -77,3 +77,50 @@ async function handleRequest(
     );
   }
 }
+
+export async function DELETE(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const id = searchParams.get("id");
+
+  if (!id) {
+    return NextResponse.json(
+      { message: "No id provided", success: false },
+      { status: 400 }
+    );
+  }
+
+  // Grab our authentication state from clerk
+  const user = await currentUser();
+
+  if (!user?.id) {
+    return NextResponse.json({ message: "Unauthenticated" }, { status: 401 });
+  }
+
+  const userId = user.id;
+  const leadMagnet = await prismadb.leadMagnet.findFirst({
+    where: { id },
+  });
+
+  if (!leadMagnet) {
+    return NextResponse.json(
+      { message: "Lead magnet not found", success: false },
+      { status: 404 }
+    );
+  }
+
+  if (leadMagnet.userId !== user?.id) {
+    return NextResponse.json(
+      { message: "Unauthorized", success: false },
+      { status: 403 }
+    );
+  }
+
+  await prismadb.leadMagnet.delete({ where: { id } });
+  return NextResponse.json(
+    {
+      message: "Successfully deleted lead magnet",
+      success: true,
+    },
+    { status: 202 }
+  );
+}
