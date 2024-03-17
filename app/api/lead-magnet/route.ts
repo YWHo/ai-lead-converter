@@ -108,7 +108,7 @@ export async function DELETE(request: Request) {
     );
   }
 
-  if (leadMagnet.userId !== user?.id) {
+  if (leadMagnet.userId !== userId) {
     return NextResponse.json(
       { message: "Unauthorized", success: false },
       { status: 403 }

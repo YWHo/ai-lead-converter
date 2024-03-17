@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-const leadMagnetPublishRequest = z.object({
+const leadMagnetUnpublishRequest = z.object({
   id: z.string({ required_error: "Id is required" }),
 });
 
@@ -20,7 +20,7 @@ export async function POST(request: Request) {
 
   const requestBody = await request.json();
   const parsedPublishedRequest =
-    leadMagnetPublishRequest.safeParse(requestBody);
+    leadMagnetUnpublishRequest.safeParse(requestBody);
 
   if (!parsedPublishedRequest.success) {
     return NextResponse.json(
@@ -57,16 +57,8 @@ export async function POST(request: Request) {
     },
     data: {
       ...leadMagnet,
-      publishedBody: leadMagnet.draftBody,
-      publishedPrompt: leadMagnet.draftPrompt,
-      publishedTitle: leadMagnet.draftTitle,
-      publishedSubtitle: leadMagnet.draftSubtitle,
-      publishedFirstQuestion: leadMagnet.draftFirstQuestion,
-      publishedEmailCapture: leadMagnet.draftEmailCapture,
+      status: "draft",
       updatedAt: new Date(),
-      status: "published",
-      publishedAt: new Date(),
-      slug: leadMagnet.slug ?? slugifyLeadMagnet(leadMagnet.draftTitle),
     },
   });
 
