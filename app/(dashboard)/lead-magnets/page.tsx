@@ -42,8 +42,8 @@ async function LeadMagnetsPage() {
     leadsRequest,
   ]);
 
-  console.log("leadMagnets", leadMagnets);
-  console.log("leads", leads);
+  // console.log("LeadMagnetsPage leadMagnets", leadMagnets);
+  // console.log("LeadMagnetsPage leads", leads);
 
   return <LeadMagnetsContainer leadMagnets={leadMagnets} leads={leads} />;
 }

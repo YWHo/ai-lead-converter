@@ -32,6 +32,7 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
     try {
       await save();
       toast.success("Saved!");
+      setEditing(false);
     } catch (err) {
       console.log("saveName err:\n", err);
       toast.error("Error saving name!");
