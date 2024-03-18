@@ -15,7 +15,7 @@ async function LeadMagnetEditorPage({ params }: LeadMagnetEditorParams) {
   const leadMagnetId =
     params.leadMagnetId?.length > 0 ? params.leadMagnetId[0] : null;
 
-  console.log("LeadMagnetEditorPage leadMagnetId:\n", leadMagnetId);
+  // console.log("LeadMagnetEditorPage leadMagnetId:\n", leadMagnetId);
 
   let leadMagnet: LeadMagnet | null = null;
 

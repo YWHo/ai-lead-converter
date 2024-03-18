@@ -15,8 +15,8 @@ function LeadMagnetsContainer({
   leadMagnets,
   leads,
 }: LeadMagnetsContainerProps) {
-  console.log("leadMagnets from inside the client:\n", leadMagnets);
-  console.log("leads from inside the client:\n", leads);
+  // console.log("leadMagnets from inside the client:\n", leadMagnets);
+  // console.log("leads from inside the client:\n", leads);
   return (
     <div className="p-6 w-full lg:max-w-5xl lg:mx-auto">
       <div className="flex justify-between items-center mb-3">

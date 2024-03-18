@@ -26,7 +26,7 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
   const [unpublishing, setUnpublishing] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  console.log("LeadMagnetEditorNavbar editedLeadMagnet:\n", editedLeadMagnet);
+  // console.log("LeadMagnetEditorNavbar editedLeadMagnet:\n", editedLeadMagnet);
 
   const saveName = async () => {
     try {
@@ -87,6 +87,8 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
     try {
       await remove();
       toast.success("Deleted!");
+      router.push("/lead-magnets");
+      router.refresh();
     } catch (err) {
       console.log("handleDelete error:\n", err);
       toast.error("Error deleting. Please try again.");
