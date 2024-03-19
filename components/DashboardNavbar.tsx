@@ -19,8 +19,6 @@ const routes = [
 function DashboardNavbar() {
   const pathname = usePathname();
 
-  console.log("pathname", pathname);
-
   return (
     <div className="p-4 flex justify-between items-center text-purple-500 border-b-2">
       {/* Logo Link */}
