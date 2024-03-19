@@ -13,6 +13,7 @@ import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import Paragraph from "@tiptap/extension-paragraph";
 import Text from "@tiptap/extension-text";
+import LeadMagnetContentPreview from "./LeadMagnetContentPreview";
 
 function LeadMagnetContentEditor() {
   const { editedLeadMagnet, setEditedLeadMagnet } =
@@ -106,7 +107,13 @@ function LeadMagnetContentEditor() {
         </div>
       </div>
       <div className="purple-dotted-pattern flex h-full w-1/2 flex-col overflow-y-auto">
-        <h1>Content Preview</h1>
+        <div className="mx-12 my-8 flex h-full max-w-lg lg:mx-auto">
+          <LeadMagnetContentPreview
+            title={editedLeadMagnet.draftTitle}
+            subtitle={editedLeadMagnet.draftSubtitle}
+            body={editedLeadMagnet.draftBody}
+          />
+        </div>
       </div>
     </div>
   );
