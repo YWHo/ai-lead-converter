@@ -1,13 +1,17 @@
 import React from "react";
 import DOMPurify from "isomorphic-dompurify";
 
-interface Props {
+interface LeadMagnetContentPreviewProps {
   title: string;
   subtitle?: string;
   body: string;
 }
 
-function LeadMagnetContentPreview({ title, subtitle, body }: Props) {
+function LeadMagnetContentPreview({
+  title,
+  subtitle,
+  body,
+}: LeadMagnetContentPreviewProps) {
   const sanitizedBody = DOMPurify.sanitize(body);
 
   return (
