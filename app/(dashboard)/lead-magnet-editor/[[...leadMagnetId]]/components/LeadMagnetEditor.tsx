@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import LeadMagnetEditorNavbar from "./LeadMagnetEditorNavbar";
 import LeadMagnetContentEditor from "./LeadMagnetContentEditor";
 import LeadMagnetEditorSidebar from "./LeadMagnetEditorSidebar";
+import LeadMagnetPromptEditor from "./LeadMagnetPromptEditor";
 
 export type LeadMagnetSections =
   | "content"
@@ -32,10 +33,10 @@ function LeadMagnetEditor({}: LeadMagnetEditorProps) {
         />
         <div className="h-full flex-grow">
           {selectedEditor === "content" && <LeadMagnetContentEditor />}
-          {selectedEditor === "prompt" && "LeadMagnetPromptEditor"}
-          {selectedEditor === "email" && "LeadMagnetEmailEditor"}
-          {selectedEditor === "profile" && "LeadMagnetProfileEditor"}
-          {selectedEditor === "settings" && "LeadMagnetSettings"}
+          {selectedEditor === "prompt" && <LeadMagnetPromptEditor />}
+          {selectedEditor === "email" && "-- LeadMagnetEmailEditor"}
+          {selectedEditor === "profile" && "-- LeadMagnetProfileEditor"}
+          {selectedEditor === "settings" && "-- LeadMagnetSettings"}
         </div>
       </div>
     </div>
