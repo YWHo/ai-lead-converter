@@ -21,7 +21,7 @@ function LeadMagnetEditor({}: LeadMagnetEditorProps) {
 
   return (
     <div
-      className="flex w-full flex-col overflow-y-hidden"
+      className="flex w-full flex-col overflow-y-hidden overflow-x-auto"
       style={{ height: `calc(100vh - 66px)` }}
     >
       <LeadMagnetEditorNavbar />

@@ -31,7 +31,7 @@ function LeadMagnetAIChatContainer({
   useEffect(() => {
     setMessages([
       { role: "system", content: prompt, id: "1" },
-      { role: "assistant", content: firstQuestion, id: "1" },
+      { role: "assistant", content: firstQuestion, id: "2" },
     ]);
   }, [prompt, firstQuestion, setMessages]);
 
@@ -41,7 +41,7 @@ function LeadMagnetAIChatContainer({
   };
 
   return (
-    <div className="flex h-full max-w-3xl flex-col">
+    <div className="flex h-full w-full max-w-3xl flex-col">
       <div className="flex-grow space-y-4 overflow-y-auto rounded-md border-2 border-solid p-4">
         {messages.length === 0 && (
           <div>No messages yet. Start chatting below!</div>
@@ -51,8 +51,8 @@ function LeadMagnetAIChatContainer({
           .map((message, idx) => (
             <div
               key={idx}
-              className={`flex items-end ${
-                message.role === "user" ? "justify-end" : ""
+              className={`flex items-start ${
+                message.role === "user" ? "justify-end ml-6" : "mr-6"
               }`}
             >
               <div
