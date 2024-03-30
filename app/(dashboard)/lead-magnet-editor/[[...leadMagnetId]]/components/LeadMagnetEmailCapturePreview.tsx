@@ -45,12 +45,14 @@ function LeadMagnetEmailCapturePreview({
             placeholder="First Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-4"
           />
           <input
             type="text"
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="mt-1 w-full rounded-md border border-gray-300 px-3 py-4"
           />
           <button
             type="submit"
