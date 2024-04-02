@@ -80,7 +80,7 @@ function LeadMagnetContentEditor() {
         </div>
         <div className="mb-4">
           <label className="mb-2 block text-sm font-bold text-gray-700">
-            Body
+            Subtitle
           </label>
           <Input
             type="text"

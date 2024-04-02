@@ -7,19 +7,24 @@ import { Input } from "@/components/ui/input";
 import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { useProfileEditorContext } from "@/context/ProfileEditorContext";
 
 interface LeadMagnetEditorNavbarProps {}
 
 function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
   const router = useRouter();
+
   const {
     editedLeadMagnet,
     publish,
     remove,
-    save,
+    save: saveLeadMagnet,
     setEditedLeadMagnet,
     unpublish,
   } = useLeadMagnetEditorContext();
+
+  const { save: saveProfile } = useProfileEditorContext();
+
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
   const [publishing, setPublishing] = useState(false);
@@ -30,7 +35,7 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
 
   const saveName = async () => {
     try {
-      await save();
+      await saveLeadMagnet();
       toast.success("Saved!");
       setEditing(false);
     } catch (err) {
@@ -46,7 +51,8 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
   const handleSave = async () => {
     setSaving(true);
     try {
-      await save();
+      await saveLeadMagnet();
+      await saveProfile();
       toast.success("Saved!");
     } catch (err) {
       console.log("handleSave error:\n", err);
