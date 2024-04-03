@@ -15,7 +15,6 @@ export const uploadThingFileRouter = {
     .middleware(async () => {
       // This code runs on your server before upload
       const user = await currentUser();
-      console.log("uploadThingFileRouter user.id: ", user?.id);
 
       // If you throw, the user will not be able to upload
       if (!user) throw new UploadThingError("Unauthorized");
@@ -44,4 +43,4 @@ export const uploadThingFileRouter = {
     }),
 } satisfies FileRouter;
 
-export type OurFileRouter = typeof uploadThingFileRouter;
+export type uploadThingFileRouter = typeof uploadThingFileRouter;
