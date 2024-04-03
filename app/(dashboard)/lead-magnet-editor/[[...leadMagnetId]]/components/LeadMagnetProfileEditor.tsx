@@ -1,9 +1,12 @@
+"use client";
+
 import { useProfileEditorContext } from "@/context/ProfileEditorContext";
+import { UploadButton } from "@/utils/uploadthing";
+import "@uploadthing/react/styles.css";
 import React from "react";
+import toast from "react-hot-toast";
 
-type Props = {};
-
-function LeadMagnetProfileEditor({}: Props) {
+function LeadMagnetProfileEditor() {
   const { editedProfile, setEditedProfile } = useProfileEditorContext();
 
   return (
@@ -12,7 +15,33 @@ function LeadMagnetProfileEditor({}: Props) {
         <h1 className="mb-4 text-3xl font-bold text-purple-500">
           Profile Editor
         </h1>
-        {/* TODO: Upload thing */}
+        <div className="mb-4">
+          <UploadButton
+            appearance={{
+              button:
+                "bg-purple-500 focus-within:ring-purple-500 after:bg-purple-500",
+            }}
+            endpoint="imageUploader"
+            onClientUploadComplete={(res) => {
+              // Do something with the response
+              console.log("LeadMagnetProfileEditor Files: ", res);
+              if (res && (res?.length ?? 0) > 0) {
+                toast.success("Upload Completed");
+                const file = res[0];
+                file &&
+                  setEditedProfile((prev) => ({
+                    ...prev,
+                    profileImageUrl: file.url,
+                  }));
+              }
+            }}
+            onUploadError={(error: Error) => {
+              // Do something with the error.
+              console.log("upload error:\n", error);
+              toast.error(`ERROR! ${error.message}`);
+            }}
+          />
+        </div>
         <div className="mb-4">
           <label className="mb-2 block text-sm font-bold text-gray-700">
             Title

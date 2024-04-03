@@ -18,6 +18,7 @@
     "@tiptap/pm": "^2.2.4",
     "@tiptap/react": "^2.2.4",
     "@tiptap/starter-kit": "^2.2.4",
+    "@uploadthing/react": "^6.4.1",
     "ai": "^3.0.13",
     "axios": "^1.6.7",
     "class-variance-authority": "^0.7.0",
@@ -35,6 +36,7 @@
     "slugify": "^1.6.6",
     "tailwind-merge": "^2.2.0",
     "tailwindcss-animate": "^1.0.7",
+    "uploadthing": "^6.7.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
