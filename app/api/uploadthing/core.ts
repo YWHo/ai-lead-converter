@@ -33,7 +33,7 @@ export const uploadThingFileRouter = {
 
       if (!profile) throw new Error("No profile found");
 
-      prismadb.profile.update({
+      await prismadb.profile.update({
         where: { userId: metadata.userId },
         data: { ...profile, profileImageUrl: file.url },
       });
