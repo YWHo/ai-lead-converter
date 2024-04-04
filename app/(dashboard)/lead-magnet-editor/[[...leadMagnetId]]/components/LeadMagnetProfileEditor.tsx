@@ -5,6 +5,7 @@ import { UploadButton } from "@/utils/uploadthing";
 import "@uploadthing/react/styles.css";
 import React from "react";
 import toast from "react-hot-toast";
+import LeadMagnetProfilePreview from "./LeadMagnetProfilePreview";
 
 function LeadMagnetProfileEditor() {
   const { editedProfile, setEditedProfile } = useProfileEditorContext();
@@ -38,7 +39,7 @@ function LeadMagnetProfileEditor() {
             onUploadError={(error: Error) => {
               // Do something with the error.
               console.log("upload error:\n", error);
-              toast.error(`ERROR! ${error.message}`);
+              toast.error(`ERROR! Something went wrong, please try again`);
             }}
           />
         </div>
@@ -77,7 +78,11 @@ function LeadMagnetProfileEditor() {
           />
         </div>
       </div>
-      <div className="purple-dotted-pattern flex w-1/2 flex-col"></div>
+      <div className="purple-dotted-pattern flex w-1/2 flex-col">
+        <div className="mx-12 my-8 flex max-w-lg rounded-lg bg-white p-4 shadow-lg lg:mx-auto">
+          <LeadMagnetProfilePreview profile={editedProfile}/>
+        </div>
+      </div>
     </div>
   );
 }
