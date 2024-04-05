@@ -64,3 +64,15 @@ model Profile {
 
   @@index([userId])
 }
+
+model Account {
+  id        String    @id @default(uuid())
+  userId    String    @unique
+  email     String    @unique
+  username  String    @unique
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+
+  @@index([userId])
+  @@index([username])
+}
