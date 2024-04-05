@@ -20,13 +20,14 @@ function AccountContainer({ account }: AccountContainerProps) {
       const res = await axios.put("/api/account", { username });
       if (!res.data.success) {
         toast.error(
-          "Something went wrong saving the username. Please try again"
+          res.data.message?.message ||
+            "Something went wrong saving the username. Please try again"
         );
         console.error("AccountContainer /api/account:\n", res.data);
         return;
       }
 
-      const updatedAccount = res.data.account;
+      const updatedAccount = res.data.data;
       if (updatedAccount) {
         setUsername(updatedAccount.username);
         toast.success("Username updated successfully!");
