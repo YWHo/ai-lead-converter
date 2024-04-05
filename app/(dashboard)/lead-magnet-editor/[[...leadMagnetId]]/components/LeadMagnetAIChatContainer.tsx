@@ -2,7 +2,6 @@
 
 import React, { useEffect } from "react";
 import { useChat } from "ai/react";
-import { set } from "zod";
 import RiseLoader from "react-spinners/RiseLoader";
 
 interface LeadMagnetAIChatContainerProps {
