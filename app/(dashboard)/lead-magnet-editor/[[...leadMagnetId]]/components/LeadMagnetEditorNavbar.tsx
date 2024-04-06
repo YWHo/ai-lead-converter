@@ -23,7 +23,7 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
     unpublish,
   } = useLeadMagnetEditorContext();
 
-  const { save: saveProfile } = useProfileEditorContext();
+  const { save: saveProfile, account } = useProfileEditorContext();
 
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -157,13 +157,14 @@ function LeadMagnetEditorNavbar({}: LeadMagnetEditorNavbarProps) {
         {/* Unpublish and View Final LM */}
         {editedLeadMagnet.status === "published" && (
           <>
-            <Button onClick={handleUnpublish}>
+            <Button variant="outline" onClick={handleUnpublish}>
               {unpublishing ? "Unpublishing..." : "Unpublish"}
             </Button>
-            {/* TODO: Change "test" to account username */}
-            <Link href={`/lm/test/${editedLeadMagnet.slug}`}>
-              <Button>View Published</Button>
-            </Link>
+            {account && (
+              <Link href={`/lm/${account?.username}/${editedLeadMagnet.slug}`}>
+                <Button variant="outline">View Published</Button>
+              </Link>
+            )}
           </>
         )}
         {/* Save & Publish with state */}

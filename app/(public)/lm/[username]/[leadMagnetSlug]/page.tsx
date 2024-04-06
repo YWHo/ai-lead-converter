@@ -49,7 +49,7 @@ async function LeadMagnetPage({ params }: LeadMagnetProps) {
       <LeadMagnetView leadMagnet={leadMagnet} profile={profile} />
       <div
         id="ai-chat"
-        className="mb-10 flex max-h-[85vh] flex-1 flex-col rounded-lg bg-white p-4 shadow-lg md:mb-0 "
+        className="mb-10 flex max-h-[85vh] flex-1 flex-col rounded-lg bg-white p-4 shadow-lg md:mb-0 md:ml-4"
       >
         <LeadMagnetAIChatContainer
           emailCapturePrompt={leadMagnet.publishedEmailCapture}

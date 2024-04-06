@@ -1,6 +1,7 @@
 import { prismadb } from "@/lib/prismadb";
 import { currentUser } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import { generateFromEmail } from "unique-username-generator";
 import { object, string } from "zod";
 
 const usernameSchema = object({
@@ -51,8 +52,42 @@ export async function PUT(request: Request) {
     },
   });
 
+  return NextResponse.json(
+    {
+      message: "Username updated",
+      success: true,
+      data: account,
+    },
+    { status: 200 }
+  );
+}
+
+export async function GET(request: Request) {
+  const user = await currentUser();
+
+  if (!user) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  let account = await prismadb.account.findFirst({
+    where: {
+      userId: user.id,
+    },
+  });
+
+  if (!account) {
+    const baseEmail = user.emailAddresses[0].emailAddress;
+    account = await prismadb.account.create({
+      data: {
+        userId: user.id,
+        email: baseEmail,
+        username: generateFromEmail(baseEmail, 3),
+      },
+    });
+  }
+
   return NextResponse.json({
-    message: "Username updated",
+    message: "Account found",
     success: true,
     data: account,
   });

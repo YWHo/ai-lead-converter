@@ -63,6 +63,7 @@ export const LeadMagnetEditorContextProvider = ({
         id: editedLeadMagnet.id,
       });
       if (response.data.data) {
+        setEditedLeadMagnet(response.data.data);
         toast.success("Lead Magnet published successfully");
       }
     } catch (err) {

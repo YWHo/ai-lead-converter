@@ -13,7 +13,6 @@ function LeadMagnetView({ leadMagnet, profile }: LeadMagnetViewProps) {
 
   return (
     <div className="mb-10 flex flex-1 max-h-[85vh] flex-col overflow-y-scroll rounded-lg bg-white p-4 shadow-lg md:mb-0 md:p-8">
-      <div>example</div>
       {profile.profileImageUrl && (
         <Image
           className="mx-auto mb-3 drop-shadow-lg"
