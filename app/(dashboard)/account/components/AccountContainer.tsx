@@ -2,18 +2,22 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Account } from "@prisma/client";
+import { getPayingStatus } from "@/utils/stripe";
+import { Account, Subscription } from "@prisma/client";
 import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
 interface AccountContainerProps {
   account: Account;
+  subscription: Subscription | null;
 }
 
-function AccountContainer({ account }: AccountContainerProps) {
+function AccountContainer({ account, subscription }: AccountContainerProps) {
+  const [isActive, setIsActive] = useState(getPayingStatus(subscription));
   const [username, setUsername] = useState(account.username);
   const [isSaving, setIsSaving] = useState(false);
+
   const updateUsername = async () => {
     try {
       setIsSaving(true);
@@ -37,6 +41,23 @@ function AccountContainer({ account }: AccountContainerProps) {
       console.error("Something went wrong saving the username:\n", err);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const handleStripe = async () => {
+    try {
+      const response = await axios.get("/api/stripe");
+      if (response.data.url) {
+        window.location.href = response.data.url;
+      } else {
+        console.error(
+          "Something went wrong with Stripe. No url on the response"
+        );
+        toast.error("Something went wrong with Stripe. Please try again");
+      }
+    } catch (err) {
+      console.error("Something went wrong with Stripe:\n", err);
+      toast.error("Something went wrong with Stripe. Please try again");
     }
   };
 
@@ -69,6 +90,15 @@ function AccountContainer({ account }: AccountContainerProps) {
           {isSaving ? "Saving..." : "Save"}
         </Button>
       </div>
+      <hr />
+      <h2 className="text-xl text-gray-700">Subscription</h2>
+      <div className="flex flex-row gap-x-2">
+        <p className="font-semibole text-gray-700">Status:</p>
+        <p className="text-gray-700">{isActive ? "Active" : "Inactive"}</p>
+      </div>
+      <Button onClick={handleStripe} variant="outline" className="w-fit">
+        {isActive ? "Manage Subscription" : "Upgrade to Pro"}
+      </Button>
     </div>
   );
 }
