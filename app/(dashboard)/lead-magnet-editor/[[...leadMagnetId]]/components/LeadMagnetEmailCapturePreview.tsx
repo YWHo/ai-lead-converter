@@ -1,15 +1,19 @@
 import axios, { AxiosError } from "axios";
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import toast from "react-hot-toast";
 
 interface LeadMagnetEmailCapturePreviewProps {
   leadMagnetId: string;
   emailCapturePrompt: string;
+  setHasCapturedUserInfo?: Dispatch<SetStateAction<boolean>>;
+  setShowEmailCaptureModal?: Dispatch<SetStateAction<boolean>>;
 }
 
 function LeadMagnetEmailCapturePreview({
   emailCapturePrompt,
   leadMagnetId,
+  setHasCapturedUserInfo,
+  setShowEmailCaptureModal,
 }: LeadMagnetEmailCapturePreviewProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,8 +24,8 @@ function LeadMagnetEmailCapturePreview({
     axios
       .post("/api/lead", { name, email, leadMagnetId })
       .then((data) => {
-        // TODO: close the modal
-        // TODO: Capture the successful lead event
+        setHasCapturedUserInfo && setHasCapturedUserInfo(true);
+        setShowEmailCaptureModal && setShowEmailCaptureModal(false);
         toast.success("You have successfully signed up!");
       })
       .catch((err: Error | AxiosError) => {

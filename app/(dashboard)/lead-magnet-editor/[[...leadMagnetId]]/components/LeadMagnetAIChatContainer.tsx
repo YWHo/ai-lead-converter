@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useChat } from "ai/react";
 import RiseLoader from "react-spinners/RiseLoader";
+import LeadMagnetEmailCaptureModal from "@/components/LeadMagnetEmailCaptureModal";
 
 interface LeadMagnetAIChatContainerProps {
   leadMagnetId: string;
@@ -13,9 +14,14 @@ interface LeadMagnetAIChatContainerProps {
 }
 
 function LeadMagnetAIChatContainer({
+  captureEmail,
+  emailCapturePrompt,
   firstQuestion,
+  leadMagnetId,
   prompt,
 }: LeadMagnetAIChatContainerProps) {
+  const [hasCapturedUserInfo, setHasCapturedUserInfo] = useState(false);
+  const [showEmailCaptureModal, setShowEmailCaptureModal] = useState(false);
   const {
     messages,
     handleSubmit: handleOpenAIChatSubmit,
@@ -34,8 +40,21 @@ function LeadMagnetAIChatContainer({
     ]);
   }, [prompt, firstQuestion, setMessages]);
 
+  const hasUserEnteredInfo = () => {
+    if (captureEmail && !hasCapturedUserInfo) {
+      setShowEmailCaptureModal(true);
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    // TODO: capture user email
+    e.preventDefault();
+
+    if (!hasUserEnteredInfo()) {
+      return;
+    }
+
     handleOpenAIChatSubmit(e);
   };
 
@@ -89,6 +108,14 @@ function LeadMagnetAIChatContainer({
           )}
         </button>
       </form>
+      {showEmailCaptureModal && (
+        <LeadMagnetEmailCaptureModal
+          leadMagnetId={leadMagnetId}
+          emailCapturePrompt={emailCapturePrompt}
+          setHasCapturedUserInfo={setHasCapturedUserInfo}
+          setShowEmailCaptureModal={setShowEmailCaptureModal}
+        />
+      )}
     </div>
   );
 }

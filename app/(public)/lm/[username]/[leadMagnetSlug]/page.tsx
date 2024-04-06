@@ -45,7 +45,7 @@ async function LeadMagnetPage({ params }: LeadMagnetProps) {
   }
 
   return (
-    <div className="ai-dotted-pattern flex w-screen flex-col justify-between p-6 md:max-h-screen md:min-h-screen md:flex-row md:p-8 lg:p-12">
+    <div className="ai-dotted-pattern h-screen w-screen flex flex-col md:flex-row justify-between p-6 md:max-h-screen min-h-screen md:p-8 lg:p-12">
       <LeadMagnetView leadMagnet={leadMagnet} profile={profile} />
       <div
         id="ai-chat"
