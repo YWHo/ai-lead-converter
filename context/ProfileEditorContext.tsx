@@ -39,7 +39,7 @@ export const ProfileEditorContextProvider = ({
   children: ReactNode;
 }) => {
   const { userId } = useAuth();
-  const [account, setAccount] = useState<Account | null>();
+  const [account, setAccount] = useState<Account | null>(null);
   const [editedProfile, setEditedProfile] = useState<Profile>(DEFAULT_PROFILE);
 
   useEffect(() => {
@@ -98,7 +98,7 @@ export const ProfileEditorContextProvider = ({
         account,
         editedProfile,
         setEditedProfile,
-        save
+        save,
       }}
     >
       {children}
