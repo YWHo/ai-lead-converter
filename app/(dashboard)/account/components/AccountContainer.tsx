@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { getPayingStatus } from "@/utils/stripe";
 import { Account, Subscription } from "@prisma/client";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 interface AccountContainerProps {
@@ -17,6 +17,10 @@ function AccountContainer({ account, subscription }: AccountContainerProps) {
   const [isActive, setIsActive] = useState(getPayingStatus(subscription));
   const [username, setUsername] = useState(account.username);
   const [isSaving, setIsSaving] = useState(false);
+
+  useEffect(() => {
+    setIsActive(getPayingStatus(subscription));
+  }, [subscription]);
 
   const updateUsername = async () => {
     try {
