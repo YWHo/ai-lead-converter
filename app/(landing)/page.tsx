@@ -155,7 +155,7 @@ const HowItWorks = () => {
         </div>
         <HowItWorksStep
           title="Step 3: Capture and Convert"
-          description="AI-Lead-Magnet asks for the user's email address, providing you with engaged leads ready for follow-up"
+          description="LeadConvert asks for the user's email address, providing you with engaged leads ready for follow-up"
           checks={[
             "Automated email capture",
             "Engage leads with dynamic content",

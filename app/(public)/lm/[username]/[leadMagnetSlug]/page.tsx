@@ -3,11 +3,66 @@ import LeadMagnetNotFound from "@/components/LeadMagnetNotFound";
 import { prismadb } from "@/lib/prismadb";
 import React from "react";
 import LeadMagnetView from "./components/LeadMagnetView";
+import { Metadata } from "next";
 
 interface LeadMagnetProps {
   params: {
     username: string;
     leadMagnetSlug: string;
+  };
+}
+
+export async function generateMetaData({
+  params,
+}: LeadMagnetProps): Promise<Metadata> {
+  const account = await prismadb.account.findUnique({
+    where: { username: params.username },
+  });
+
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL ?? "";
+  let title = "LeadConvert";
+  let description =
+    "LeadConvert helps creators turn regular content into interactive AI experiences, effortlessly capturing leads, and nurturing them towards your digital products or courses.";
+  let openGraphImage;
+
+  if (account) {
+    const leadMagnet = await prismadb.leadMagnet.findFirst({
+      where: {
+        userId: account.userId,
+        slug: params.leadMagnetSlug,
+        status: "published",
+      },
+    });
+    if (leadMagnet) {
+      title = leadMagnet.publishedTitle;
+      description = leadMagnet.publishedSubtitle;
+      if (process.env.SCREENSHOT_ACCESS_KEY) {
+        openGraphImage = {
+          url: `https://image.thum.io/get/auth/${process.env.SCREENSHOT_ACCESS_KEY}/width/1200/crop/700/${baseURL}/lm/${account.username}/${leadMagnet.slug}`,
+          width: 4096,
+          height: 4096,
+          alt: "Lead Magnet Preview",
+        };
+      }
+    }
+  }
+
+  return {
+    title,
+    openGraph: openGraphImage
+      ? {
+          images: [openGraphImage],
+        }
+      : undefined,
+    twitter: {
+      card: "summary_large_image",
+      site: process.env.NEXT_PUBLIC_TWITTER_TAG
+        ? `${process.env.NEXT_PUBLIC_TWITTER_TAG}`
+        : undefined,
+      title: title,
+      description: description,
+      images: openGraphImage,
+    },
   };
 }
 
