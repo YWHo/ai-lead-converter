@@ -28,6 +28,7 @@ async function handleRequest(
     const requestData = await request.json();
 
     const parsed = schema.safeParse(requestData);
+
     if (!parsed.success) {
       return NextResponse.json(
         { message: parsed.error.message },

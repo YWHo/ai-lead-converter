@@ -26,7 +26,6 @@ export const LeadMagnetEditorContextProvider = ({
   leadMagnet: LeadMagnet;
 }) => {
   const { session } = useSession();
-  const { replace, push } = useRouter();
   const [editedLeadMagnet, setEditedLeadMagnet] =
     useState<LeadMagnet>(leadMagnet);
 
