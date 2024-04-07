@@ -1,5 +1,6 @@
 import React from "react";
 import LandingPageNavbar from "./components/LandingPageNavbar";
+import LandingPageFooter from "./components/LandingPageFooter";
 
 function LandingLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -7,6 +8,8 @@ function LandingLayout({ children }: { children: React.ReactNode }) {
       <LandingPageNavbar />
 
       <div className="flex-grow">{children}</div>
+
+      <LandingPageFooter />
     </section>
   );
 }
