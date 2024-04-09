@@ -9,8 +9,8 @@ This app is designed for clients to create a problem-solving page (where AI work
 
 ## Demo View (Landing page)
 
-![landing part-1](./screenshot/landing-page-step-1.png)
+![landing part-1](./screenshot/landing_part1.png)
 
-![landing part-2](./screenshot/landing-page-step-1.png)
+![landing part-2](./screenshot/landing_part2.png)
 
-![landing part-3](./screenshot/landing-page-step-1.png)
+![landing part-3](./screenshot/landing_part3.png)
